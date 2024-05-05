@@ -1,4 +1,4 @@
-
+/*Included jQuery code inside as well*/
 const projectName = 'random-quote-machine';
 let quotesData;
 
