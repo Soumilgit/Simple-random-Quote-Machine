@@ -16,6 +16,10 @@
           <i class="fa fa-quote-left"> </i><span id="text"></span>
         </div>
         <div class="quote-author">- <span id="author"></span></div>
+        <div id="loading-spinner" style="display:none;">
+          <img src="spinner.gif" alt="Loading...">
+        </div>
+      
         <div class="buttons">
           <a
             class="button"
@@ -33,6 +37,23 @@
           >
             <i class="fa fa-tumblr"></i>
           </a>
+          <select id="theme-selector" onchange="changeTheme(this.value)" style="background-color:#8A2BE2;">
+            <option value="#8A2BE2" style="background-color:#8A2BE2;">BlueViolet</option>
+            <option value="#00FFFF" style="background-color:#00FFFF;">Blue</option>
+            <option value="#A52A2A" style="background-color:#A52A2A">Brown</option>
+            <option value="#5F9EA0" style="background-color:#5F9EA0">CadetBlue</option>
+            <option value="#7FFF00" style="background-color:#7FFF00">Chartreuse</option>
+            <option value="#FF7F50" style="background-color:#FF7F50">Coral</option>
+            <option value="#6495ED" style="background-color:#6495ED">CornflowerBlue</option>
+            <option value="#DC143C" style="background-color:#DC143C">Crimson</option>
+            <option value="#00008B" style="background-color:#00008B;">DarkBlue</option>
+            <option value="#B8860B" style="background-color:#B8860B">DarkGoldenRod</option>
+            <option value="#8B008B" style="background-color:#8B008B">DarkMagenta</option>
+            <option value="#FF8C00" style="background-color:#FF8C00">DarkOrange</option>
+            <option value="#556B2F" style="background-color:#556B2F">DarkOliveGreen</option>
+            <option value="#483D8B" style="background-color:#483D8B">DarkSlateBlue</option>
+          </select>
+          
           <button class="button" id="new-quote">New</button>
         </div>
       </div>
