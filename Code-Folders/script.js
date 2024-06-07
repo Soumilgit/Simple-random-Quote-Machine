@@ -1,11 +1,9 @@
-/*Included jQuery code inside as well*/
 const projectName = 'random-quote-machine';
 let quotesData;
 
-const colors = [
-  
-  
-];
+// Define an array of colors
+const colors = ['#FF5733', '#DAF7A6', '#581845', '#C70039', '#900C3F', '#581845', '#FF5733', '#DAF7A6', '#C70039', '#900C3F'];
+
 var currentQuote = '',
   currentAuthor = '';
 
@@ -26,9 +24,7 @@ function getQuotes() {
 }
 
 function getRandomQuote() {
-  return quotesData.quotes[
-    Math.floor(Math.random() * quotesData.quotes.length)
-  ];
+  return quotesData.quotes[Math.floor(Math.random() * quotesData.quotes.length)];
 }
 
 function getQuote() {
@@ -37,6 +33,7 @@ function getQuote() {
   currentQuote = randomQuote.quote;
   currentAuthor = randomQuote.author;
 
+  // Update the tweet and Tumblr share URLs with the new quote and author
   $('#tweet-quote').attr(
     'href',
     'https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' +
@@ -52,6 +49,7 @@ function getQuote() {
       '&canonicalUrl=https%3A%2F%2Fwww.tumblr.com%2Fbuttons&shareSource=tumblr_share_button'
   );
 
+  // Animate the quote text and author change
   $('.quote-text').animate({ opacity: 0 }, 600, function () {
     $(this).animate({ opacity: 1 }, 500);
     $('#text').text(randomQuote.quote);
@@ -62,17 +60,22 @@ function getQuote() {
     $('#author').html(randomQuote.author);
   });
 
-  var color = Math.floor(Math.random() * colors.length);
-  $('html body').animate(
+  // Select a random color from the colors array
+  var color = colors[Math.floor(Math.random() * colors.length)];
+
+  // Apply the selected color to the background of the entire page
+  $('html, body').animate(
     {
-      backgroundColor: colors[color],
-      color: colors[color]
+      backgroundColor: color,
+      color: color
     },
     1000
   );
+
+  // Optionally, animate the button color change
   $('.button').animate(
     {
-      backgroundColor: colors[color]
+      backgroundColor: color
     },
     1000
   );
