@@ -1,39 +1,46 @@
+
 const projectName = 'random-quote-machine';
 let quotesData;
 
-// Define an array of colors
-const colors = ['#FF5733', '#DAF7A6', '#581845', '#C70039', '#900C3F', '#581845', '#FF5733', '#DAF7A6', '#C70039', '#900C3F'];
+var colors = [
+  '#8A2BE2',
+  '#00FFFF',
+  '#A52A2A',
+  '#5F9EA0',
+  '#7FFF00',
+  '#FF7F50',
+  '#6495ED',
+  '#DC143C',
+  '#00008B',
+  
+  '#B8860B',
+  '#FF8C00',
+  '8B008B',
+  '#556B2F',    
+     
+  '#483D8B'
+];
 
 var currentQuote = '',
   currentAuthor = '';
 
-function getQuotes() {
-  return $.ajax({
-    headers: {
-      Accept: 'application/json'
-    },
-    url: 'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json',
-    success: function (jsonQuotes) {
-      if (typeof jsonQuotes === 'string') {
-        quotesData = JSON.parse(jsonQuotes);
-        console.log('quotesData');
-        console.log(quotesData);
-      }
-    }
-  });
+function fetchRandomQuote() {
+  fetch('https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json')
+  .then(response => response.json())
+  .then(data => {
+      const quote = data.quotes[Math.floor(Math.random() * data.quotes.length)];
+      currentQuote = quote.quote;
+      currentAuthor = quote.author;
+      updateUI(quote); 
+    })
+  .catch(error => {
+      console.error('Error fetching quote:', error);
+    });
 }
 
-function getRandomQuote() {
-  return quotesData.quotes[Math.floor(Math.random() * quotesData.quotes.length)];
-}
-
-function getQuote() {
-  let randomQuote = getRandomQuote();
-
-  currentQuote = randomQuote.quote;
-  currentAuthor = randomQuote.author;
-
-  // Update the tweet and Tumblr share URLs with the new quote and author
+function updateUI(quoteObj) {
+  
+  
   $('#tweet-quote').attr(
     'href',
     'https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' +
@@ -49,42 +56,20 @@ function getQuote() {
       '&canonicalUrl=https%3A%2F%2Fwww.tumblr.com%2Fbuttons&shareSource=tumblr_share_button'
   );
 
-  // Animate the quote text and author change
-  $('.quote-text').animate({ opacity: 0 }, 600, function () {
-    $(this).animate({ opacity: 1 }, 500);
-    $('#text').text(randomQuote.quote);
-  });
+  
+  $('.quote-text').text(currentQuote);
+  $('.quote-author').text('- ' + currentAuthor);
 
-  $('.quote-author').animate({ opacity: 0 }, 600, function () {
-    $(this).animate({ opacity: 1 }, 500);
-    $('#author').html(randomQuote.author);
-  });
-
-  // Select a random color from the colors array
+  
   var color = colors[Math.floor(Math.random() * colors.length)];
-
-  // Apply the selected color to the background of the entire page
-  $('html, body').animate(
-    {
-      backgroundColor: color,
-      color: color
-    },
-    1000
-  );
-
-  // Optionally, animate the button color change
-  $('.button').animate(
-    {
-      backgroundColor: color
-    },
-    1000
-  );
+  document.body.style.backgroundColor = color; 
+  document.body.style.color = color; 
+  $('.button').css('background-color', color); 
 }
+  
 
-$(document).ready(function () {
-  getQuotes().then(() => {
-    getQuote();
-  });
 
-  $('#new-quote').on('click', getQuote);
-});
+document.getElementById("new-quote").addEventListener("click", fetchRandomQuote);
+
+
+fetchRandomQuote();
